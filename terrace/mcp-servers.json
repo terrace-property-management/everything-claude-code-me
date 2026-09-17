@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT_HERE"
+      },
+      "description": "GitHub operations - PRs, issues, repos. Kept: terrace-control-plane's whole PR workflow (branch, gh pr create, gh pr merge --squash --delete-branch) runs through this."
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@context7/mcp-server"],
+      "description": "Live documentation lookup. Kept: already installed and in active use at Terrace (see the claude_ai_Context7 / plugin_context7_context7 connectors already wired into this account) -- listed here so a from-scratch terrace-control-plane checkout can stand up the same capability locally."
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/your/projects"],
+      "description": "Filesystem operations (set your path, e.g. the terrace-control-plane working copy under C:\\Users\\sward\\work)."
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "description": "Chain-of-thought reasoning scratchpad. Kept as an OPTIONAL nice-to-have, not currently used anywhere in the Terrace stack -- add it only if a session actually wants structured multi-step reasoning support beyond what the model does natively."
+    }
+  },
+  "_dropped": {
+    "firecrawl": "Not in the task's explicit keep or drop list, but not part of the Terrace stack either: no web-scraping/crawling workflow exists anywhere in terrace-control-plane. Dropped on the same 'not part of this stack' reasoning as the others below; flagged here explicitly since it wasn't named in the porting instructions either way.",
+    "supabase": "No Supabase usage anywhere in terrace-control-plane; the data layer is psycopg3 + plain numbered SQL migrations against hosted Postgres (Neon), not Supabase.",
+    "vercel": "No Vercel deployments in this stack; dashboard/app.py is server-rendered Starlette, deployed to Render, with no Next.js/npm build step.",
+    "railway": "Not part of the Terrace stack; hosting is Render (terrace-ops-v2), not Railway.",
+    "cloudflare-docs": "No Cloudflare usage (Workers, Pages, or otherwise) anywhere in terrace-control-plane.",
+    "cloudflare-workers-builds": "Same as above -- no Cloudflare Workers in this stack.",
+    "cloudflare-workers-bindings": "Same as above -- no Cloudflare Workers in this stack.",
+    "cloudflare-observability": "Same as above -- no Cloudflare usage to observe.",
+    "clickhouse": "No ClickHouse or other analytics-warehouse usage; all data lives in the one Postgres instance (Neon) that psycopg3 talks to directly.",
+    "magic": "UI-generation MCP for React component scaffolding; there's no React/frontend build in this stack (server-rendered Starlette HTML only), so there's nothing for it to generate into.",
+    "memory": "Dropped deliberately, not just as irrelevant: Terrace already runs its own structured, actively-used memory system outside Claude Code's account-level memory. A second, generic MCP memory server sitting alongside it would create two sources of truth for the same kind of state and invite drift between them, which is worse than having neither."
+  },
+  "_comments": {
+    "usage": "Copy the servers you need into the consuming repo's ~/.claude.json mcpServers section (or the project-level equivalent).",
+    "env_vars": "Replace YOUR_*_HERE placeholders with actual values.",
+    "disabling": "Use disabledMcpServers array in project config to disable per-project.",
+    "context_warning": "Keep under 10 MCPs enabled to preserve context window -- directly relevant here: this Claude Code account already runs dozens of MCP tools across many first-party connectors (Gmail, Microsoft 365, Notion, Neon, QuickBooks, terrace-ops-v2, etc.), so adding the four kept above should be a deliberate, counted decision, not a default-everything-on one."
+  }
+}

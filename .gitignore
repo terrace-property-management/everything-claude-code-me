@@ -21,6 +21,16 @@ Thumbs.db
 # Node
 node_modules/
 
+# Python (terrace/ tooling)
+__pycache__/
+*.pyc
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# State written by terrace/hooks/*.py at runtime (per-consuming-repo, never committed)
+.claude/state/
+
 # Personal configs (if any)
 personal/
 private/

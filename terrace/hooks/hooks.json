@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_note": "Paths below assume these scripts live at ${CLAUDE_PROJECT_DIR}/.claude/hooks/*.py in the CONSUMING repo (e.g. terrace-control-plane). Copy terrace/hooks/*.py there (or point CLAUDE_PROJECT_DIR-relative paths at wherever you vendor them) before pasting this file's \"hooks\" block into that repo's .claude/settings.json. JSON has no comments, so hooks dropped from the original (dev-server-outside-tmux block, tmux reminder, SessionEnd persist + evaluate-session/continuous-learning) are simply absent here rather than commented out -- see the porting report for why each was dropped.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "tool == \"Bash\" && tool_input.command matches \"git push\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/git_push_reminder.py\""
+          }
+        ],
+        "description": "Reminder before git push: branch -> PR -> review -> squash-merge workflow"
+      },
+      {
+        "matcher": "tool == \"Write\" && tool_input.file_path matches \"\\\\.(md|txt)$\" && !(tool_input.file_path matches \"README\\\\.md|CLAUDE\\\\.md|AGENTS\\\\.md|CONTRIBUTING\\\\.md\")",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/block_stray_docs.py\""
+          }
+        ],
+        "description": "Block creation of stray .md/.txt files - keeps docs consolidated"
+      },
+      {
+        "matcher": "tool == \"Edit\" || tool == \"Write\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/suggest_compact.py\""
+          }
+        ],
+        "description": "Suggest manual /compact at a tool-call threshold (context economics)"
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/pre_compact_note.py\""
+          }
+        ],
+        "description": "Log a timestamped marker before context compaction"
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/session_start_note.py\""
+          }
+        ],
+        "description": "Report prior session state and current git worktree/branch"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "tool == \"Bash\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/pr_created_notice.py\""
+          }
+        ],
+        "description": "Log PR URL and review/merge commands after `gh pr create`"
+      },
+      {
+        "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\\\.py$\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/post_edit_format.py\""
+          }
+        ],
+        "description": "Auto-format .py files with `ruff format` after edits"
+      },
+      {
+        "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\\\.py$\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/post_edit_lint.py\""
+          }
+        ],
+        "description": "`ruff check` on edited .py files, surfacing only that file's lines"
+      },
+      {
+        "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\\\.py$\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/debug_leftover_warn.py\""
+          }
+        ],
+        "description": "Warn about stray print() left in an edited .py file"
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/stop_debug_sweep.py\""
+          }
+        ],
+        "description": "Final sweep for stray print() across all modified .py files"
+      }
+    ]
+  }
+}

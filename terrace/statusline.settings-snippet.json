@@ -1,0 +1,20 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/statusline.py\"",
+    "description": "Terrace statusline: user:path branch* ctx:% model time todos:N"
+  },
+  "_comments": {
+    "usage": "Copy the statusLine object above into the top level of the consuming repo's .claude/settings.json (e.g. terrace-control-plane/.claude/settings.json), and copy terrace/statusline.py to that repo's .claude/statusline.py.",
+    "colors": {
+      "cyan": "username, todo count",
+      "blue": "cwd",
+      "green": "git branch",
+      "yellow": "dirty marker (*), time",
+      "magenta": "context remaining %",
+      "gray": "model display name"
+    },
+    "context_percentage": "context_window.remaining_percentage is kept front and center (not simplified away) because context economics is a first-class concern in terrace-control-plane's house rules -- 86.4% of a recent quarter's spend there was context re-read, not new work.",
+    "output_example": "sward:~\\work\\terrace-control-plane main* ctx:73% Sonnet 5 14:30 todos:3"
+  }
+}
