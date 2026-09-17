@@ -2,7 +2,7 @@
 name: tdd-guide
 description: Test-Driven Development specialist for terrace-control-plane, enforcing pytest write-tests-first methodology. Use PROACTIVELY when writing a new loader function, MCP tool, or producer. Knows the validate-write-readback pattern is this stack's actual test-worthy invariant for write tools.
 tools: Read, Write, Edit, Bash, Grep
-model: opus
+model: sonnet
 ---
 
 # TDD guide — terrace-control-plane

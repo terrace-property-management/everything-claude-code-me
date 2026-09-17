@@ -107,6 +107,9 @@ item on auditing active MCP count).
 All eight adapted agents carry an enumerated `tools:` list with zero
 `mcp__*` entries, matching `terrace-control-plane`'s own
 `docs/subagents.md` house rule (verified against `tests/test_agent_definitions.py`).
+Model tiering by role (Haiku/Sonnet/Opus) is applied per `terrace/agents/MODEL_TIERING.md`
+— the original fork had all nine agents hardcoded to `opus`, which its own
+`rules/performance.md` argues against.
 
 | Agent | Verdict |
 |---|---|

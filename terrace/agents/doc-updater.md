@@ -2,7 +2,7 @@
 name: doc-updater
 description: Documentation-maintenance specialist for terrace-control-plane. Use PROACTIVELY after a schema, scope, or convention change to keep docs/decisions.md, docs/lessons.md, docs/subagents.md and CLAUDE.md itself current. There are no codemaps, no JSDoc, and no README-from-AST generation here — the doc surface is prose, and the source of truth is the code plus the decisions log, not a generated map.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: haiku
 ---
 
 # Doc updater — terrace-control-plane
