@@ -11,7 +11,7 @@
     "context7": {
       "command": "npx",
       "args": ["-y", "@context7/mcp-server"],
-      "description": "Live documentation lookup. Kept: already installed and in active use at Terrace (see the claude_ai_Context7 / plugin_context7_context7 connectors already wired into this account) -- listed here so a from-scratch terrace-control-plane checkout can stand up the same capability locally."
+      "description": "Live documentation lookup. Kept: in active use at Terrace via the plugin:context7:context7 marketplace install (confirmed by real invocation counts in the 2026-09-17 MCP audit, see terrace/MCP_AUDIT_2026-09-17.md) -- listed here so a from-scratch terrace-control-plane checkout can stand up the same capability locally. NOT via the claude.ai Context7 connector, which the same audit found has zero real invocations from this account's Claude Code CLI -- don't assume both are equally live."
     },
     "filesystem": {
       "command": "npx",
@@ -40,7 +40,7 @@
   "_comments": {
     "usage": "Copy the servers you need into the consuming repo's ~/.claude.json mcpServers section (or the project-level equivalent).",
     "env_vars": "Replace YOUR_*_HERE placeholders with actual values.",
-    "disabling": "Use disabledMcpServers array in project config to disable per-project.",
-    "context_warning": "Keep under 10 MCPs enabled to preserve context window -- directly relevant here: this Claude Code account already runs dozens of MCP tools across many first-party connectors (Gmail, Microsoft 365, Notion, Neon, QuickBooks, terrace-ops-v2, etc.), so adding the four kept above should be a deliberate, counted decision, not a default-everything-on one."
+    "disabling": "Use disabledMcpjsonServers (per-project, in .claude.json) to disable one of THESE local/project-scoped servers per project. This only reaches servers registered this way (this file's four, plus playwright/render/terrace-ops-v2/filesystem already configured account-wide) -- it has no effect on claude.ai account Connectors (Gmail, Microsoft 365, Notion, Google Drive/Calendar, QuickBooks, Neon, Docusign, Claude Docs, Context7). Those are enabled/disabled at claude.ai Settings > Connectors, account-wide across web/mobile/Cowork too, not per Claude Code project -- there is no project-level lever for them today.",
+    "context_warning": "Keep under 10 MCPs enabled to preserve context window is directionally right but doesn't transfer cleanly here: Claude Code's deferred-tool loading means an inactive server's cost is roughly its tool-name strings in the system prompt, not full schemas for every tool -- a real, bounded cost, but nowhere near the 200k-to-70k collapse this warning describes for pre-deferred-loading setups. The 2026-09-17 MCP audit (terrace/MCP_AUDIT_2026-09-17.md) measured this account's real active count (15) and real per-connector usage from transcript evidence rather than assuming the number itself is the problem -- read that before treating '<10' as a target to hit."
   }
 }
