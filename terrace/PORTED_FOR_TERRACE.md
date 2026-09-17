@@ -77,10 +77,17 @@ system; a generic MCP memory server would duplicate/conflict. `firecrawl` —
 no web-scraping workflow exists in `terrace-control-plane` today; **this one
 was a judgment call, not a named instruction — reconsider if that's wrong.**
 
-Kept verbatim: the original's own guidance to stay under 10 active MCPs per
-project — directly relevant, since this Claude Code account runs dozens of
-MCP tools across many connectors today (see the adoption report's Track S
-item on auditing active MCP count).
+**Update (2026-09-17):** the Track S MCP-count audit is done — see
+`terrace/MCP_AUDIT_2026-09-17.md`. Short version: the "<10 MCPs" framing
+doesn't transfer cleanly to this account (deferred tool loading bounds the
+real cost, and 10 of the 15 active servers are claude.ai account Connectors
+with no per-project disable lever at all). Real finding: the `context7`
+entry above and the claude.ai Context7 connector are a confirmed true
+duplicate — zero real invocations on the connector side, all usage on the
+plugin side. Three other connectors (Google Drive, Notion, Google Calendar)
+show zero local CLI usage but that isn't proof they're unused elsewhere
+(claude.ai web/Cowork transcripts aren't visible to this measurement) — flagged
+for Spencer to confirm, not acted on here.
 
 ## Commands (`terrace/commands/`)
 
