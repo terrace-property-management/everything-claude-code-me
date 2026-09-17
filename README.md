@@ -12,6 +12,13 @@ Production-ready agents, skills, hooks, commands, rules, and MCP configurations 
 
 ---
 
+> **Terrace Property Management fork:** this repo assumes an npm/TypeScript/React
+> stack. `terrace/` holds a parallel, working Python adaptation for
+> `terrace-control-plane`'s actual stack (uv/ruff/pytest/psycopg3/FastMCP) —
+> see [`terrace/PORTED_FOR_TERRACE.md`](terrace/PORTED_FOR_TERRACE.md) for what
+> was ported, adapted, or dropped and why. Nothing outside `terrace/` was
+> modified from upstream.
+
 ## The Guides
 
 This repo is the raw code only. The guides explain everything.
