@@ -2,7 +2,7 @@
 name: refactor-cleaner
 description: Dead-code cleanup specialist for terrace-control-plane. Use PROACTIVELY for removing unused imports/variables and consolidating duplicates. Python has no tool as mature as knip/ts-prune for this — ruff's F401/F841 rules are the primary mechanism, and that limitation is real, not worked around.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: haiku
 ---
 
 # Refactor & dead-code cleaner — terrace-control-plane

@@ -2,7 +2,7 @@
 name: build-error-resolver
 description: Test and lint failure resolution specialist for terrace-control-plane. Use PROACTIVELY when `uv run pytest` or `uv run ruff check` fails. Fixes failures with minimal diffs, no architectural edits. There is no build step or tsc in this stack — there is nothing to compile.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: haiku
 ---
 
 # Test/lint failure resolver — terrace-control-plane
